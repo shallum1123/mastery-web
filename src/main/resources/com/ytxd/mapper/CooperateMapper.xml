@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ytxd.dao.CooperateMapper">
+    <resultMap id="BaseResultMap" type="com.ytxd.pojo.Cooperate">
+        <id column="coop_id" property="coopId" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="post" property="post" jdbcType="VARCHAR"/>
+        <result column="company" property="company" jdbcType="VARCHAR"/>
+        <result column="area" property="area" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="problem" property="problem" jdbcType="VARCHAR"/>
+        <result column="spare1" property="spare1" jdbcType="VARCHAR"/>
+        <result column="spare2" property="spare2" jdbcType="VARCHAR"/>
+        <result column="spare3" property="spare3" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        coop_id
+        ,
+        name,
+        tel,
+        post,
+        company,
+        area,
+        email,
+        create_time,
+        problem,
+        spare1,
+        spare2,
+        spare3
+    </sql>
+    <!-- 查询所有数据-->
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cooperate
+        <where>
+            <if test="mohu !=null and  mohu!='' ">
+                company like CONCAT('%',#{mohu},'%')
+            </if>
+        </where>
+    </select>
+    <!--根据id查询-->
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from cooperate
+        where coop_id = #{coopId,jdbcType=VARCHAR}
+    </select>
+    <!--删除-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from cooperate
+        where coop_id = #{coopId,jdbcType=VARCHAR}
+    </delete>
+    <!--添加-->
+    <insert id="insert" parameterType="com.ytxd.pojo.Cooperate">
+        insert into cooperate
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="coopId != null">
+                coop_id,
+            </if>
+
+            <if test="name != null">
+                name,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="post != null">
+                post,
+            </if>
+            <if test="company != null">
+                company,
+            </if>
+            <if test="area != null">
+                area,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="problem != null">
+                problem,
+            </if>
+            <if test="spare1 != null">
+                spare1,
+            </if>
+            <if test="spare2 != null">
+                spare2,
+            </if>
+            <if test="spare3 != null">
+                spare3,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="coopId != null">
+                #{coopId,jdbcType=VARCHAR},
+            </if>
+
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="post != null">
+                #{post,jdbcType=VARCHAR},
+            </if>
+            <if test="company != null">
+                #{company,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="problem != null">
+                #{problem,jdbcType=VARCHAR},
+            </if>
+            <if test="spare1 != null">
+                #{spare1,jdbcType=VARCHAR},
+            </if>
+            <if test="spare2 != null">
+                #{spare2,jdbcType=VARCHAR},
+            </if>
+            <if test="spare3 != null">
+                #{spare3,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+
+</mapper>

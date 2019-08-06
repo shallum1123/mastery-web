@@ -1,0 +1,43 @@
+#注册中心
+server:
+  port: 6002
+eureka:
+  client:
+    service-url:
+      defaultZone: http://user:hanhuibing@com.dolphin.eureka1:9001/eureka,http://user:hanhuibing@com.dolphin.eureka2:9002/eureka
+  instance:
+    #每间隔10s，向服务端发送一次心跳，证明自己依然”存活“
+    lease-renewal-interval-in-seconds: 10
+    #告诉服务端，如果我20s之内没有给你发心跳，就代表我“死”了，将我踢出掉。
+    lease-expiration-duration-in-seconds: 20
+
+spring:
+  #数据库配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://192.144.192.2:3306/masteydb?characterEncoding=utf8
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 1qaz2wsx!@
+  #上传文件大小设置
+  http:
+    multipart:
+      max-file-size: 1000MB
+      max-request-size: 1000MB
+  #热部署
+  devtools:
+    restart:  enabled:false
+    #日期格式转换
+    #jackson:
+    #date-format: java.text.SimpleDateFormat
+  application:
+    name: mastery-web
+
+#实体类起别名，指定mapper文件位置
+mybatis:
+  type-aliases-package: com.ytxd.pojo
+  mapper-locations: classpath:com/ytxd/mapper/*Mapper.xml
+upload:
+  file-path: /workspace/uploadFile
+  #url: http://192.168.43.162:6002
+  url: http://192.144.192.2:6002

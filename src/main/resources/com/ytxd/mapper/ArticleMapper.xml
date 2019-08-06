@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ytxd.dao.ArticleMapper">
+    <resultMap id="articleMap" type="com.ytxd.pojo.Article">
+        <id column="article_id" property="articleId" jdbcType="VARCHAR"/>
+        <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
+        <result column="article_title" property="articleTitle" jdbcType="VARCHAR"/>
+        <result column="abbreviation" property="abbreviation" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="sketch" property="sketch" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="INTEGER"/>
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <resultMap id="fileListMap" type="com.ytxd.pojo.FileList">
+        <id column="file_id" property="fileId" jdbcType="VARCHAR"/>
+        <result column="category_id" property="categoryId" jdbcType="INTEGER"/>
+        <result column="business_id" property="businessId" jdbcType="VARCHAR"/>
+        <result column="file_title" property="fileTitle" jdbcType="VARCHAR"/>
+        <result column="real_name" property="realName" jdbcType="VARCHAR"/>
+        <result column="upload_name" property="uploadName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="file_sort" property="fileSort" jdbcType="INTEGER"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="spare1" property="spare1" jdbcType="VARCHAR"/>
+        <result column="spare2" property="spare2" jdbcType="VARCHAR"/>
+        <result column="spare3" property="spare3" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Article_List">
+        article_id
+        ,
+        category_id,
+        article_title,
+        abbreviation,
+        create_time,
+        update_time,
+        sketch,
+        content,
+        status
+    </sql>
+    <sql id="FileList_List">
+        file_id
+        ,
+        category_id ,
+        business_id,
+        file_title,
+        real_name,
+        upload_name,
+        create_time,
+        update_time,
+        file_sort,
+        url,
+        spare1,
+        spare2,
+        spare3
+    </sql>
+    <!--按条件查询对应文章内容-->
+    <select id="selectByCondition" resultMap="articleMap">
+        select
+        <include refid="Article_List"/>
+        from article
+        <where>
+            <if test="articleId != null and articleId !='' ">
+                article_id = #{articleId,jdbcType=VARCHAR}
+            </if>
+            <if test="categoryId != null and categoryId !='' ">
+                category_id = #{categoryId,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据文章主键查询对应的所有附件-->
+    <select id="selectByBusinessId" resultMap="fileListMap">
+        select
+        <include refid="FileList_List"/>
+        from filelist
+        <where>
+            <if test="businessId != null and businessId !='' ">
+                business_id= #{businessId,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据所选id删除对应文章内容-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from article
+        where article_id = #{articleId,jdbcType=VARCHAR}
+    </delete>
+
+    <!--根据所给条件增加文章内容-->
+    <insert id="insertSelective" parameterType="com.ytxd.pojo.Article">
+        insert into article
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="articleId != null">
+                article_id,
+            </if>
+            <if test="categoryId != null">
+                category_id,
+            </if>
+            <if test="articleTitle != null">
+                article_title,
+            </if>
+            <if test="abbreviation != null">
+                abbreviation,
+            </if>
+            <if test="createTime != null" >
+              create_time,
+            </if>
+            <if test="updateTime != null" >
+              update_time,
+            </if>
+            <if test="sketch != null">
+                sketch,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="articleId != null">
+                #{articleId,jdbcType=VARCHAR},
+            </if>
+            <if test="categoryId != null">
+                #{categoryId,jdbcType=INTEGER},
+            </if>
+            <if test="articleTitle != null">
+                #{articleTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="abbreviation != null">
+                #{abbreviation,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sketch != null">
+                #{sketch,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--根据给定值修改对应内容-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.ytxd.pojo.Article">
+        update article
+        <set>
+            <if test="categoryId != null">
+                category_id = #{categoryId,jdbcType=INTEGER},
+            </if>
+            <if test="articleTitle != null">
+                article_title = #{articleTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="abbreviation != null">
+                abbreviation = #{abbreviation,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sketch != null">
+                sketch = #{sketch,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where article_id = #{articleId,jdbcType=VARCHAR}
+    </update>
+
+</mapper>
