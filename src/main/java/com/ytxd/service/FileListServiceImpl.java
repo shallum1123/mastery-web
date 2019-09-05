@@ -4,13 +4,13 @@ import com.ytxd.common.Response;
 import com.ytxd.common.SplitPageUtil;
 import com.ytxd.dao.FileListMapper;
 import com.ytxd.pojo.FileList;
+import org.h2.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import org.springframework.util.CollectionUtils;
+
+import java.util.*;
 
 @Service
 @Transactional
@@ -26,8 +26,8 @@ public class FileListServiceImpl implements FileListService {
      * @return
      */
     @Override
-    public Response selectCategotyId(Integer categoryId, Integer page, Integer rows) {
-        if (categoryId == null) {
+    public Response selectCategotyId(int categoryId, Integer page, Integer rows) {
+        if (categoryId == 0) {
             throw new RuntimeException("所属类目不能为空");
         }
         List<FileList> fileLists = fileListMapper.selectCategotyId(categoryId);
@@ -63,7 +63,9 @@ public class FileListServiceImpl implements FileListService {
             //id不为空则是替换 附件
             FileList file = fileListMapper.selectFileId(fileList.getFileId());
             //将原来的创建时间赋值给替换后的附件
-            fileList.setCreateTime(file.getCreateTime());
+            if(Objects.nonNull(file)){
+                fileList.setCreateTime(file.getCreateTime());
+            }
             //修改时间为当前时间
             fileList.setUpdateTime(date);
             //根据id删除附件
@@ -75,11 +77,47 @@ public class FileListServiceImpl implements FileListService {
         //定义附件主键id
         String uuid = UUID.randomUUID().toString().replace("-", "");
         fileList.setFileId(uuid);
-        if (fileList.getCategoryId() == null) {
+        if (fileList.getCategoryId()==0) {
             throw new RuntimeException("请选择您要添加图片所属的类目");
         }
 
         return fileListMapper.insert(fileList);
+    }
+    /**
+     * 添加多个附件接口
+     */
+    @Override
+    public int insertFiles(List<FileList> list) {
+        if(CollectionUtils.isEmpty(list)){
+            throw new RuntimeException("请选择上传的附件！");
+        }
+        java.sql.Date date = new java.sql.Date(new Date().getTime());
+        for (FileList file:list) {
+            if (file.getCategoryId()==0) {
+                throw new RuntimeException("请选择您要添加图片所属的类目");
+            }
+            //判断附件id是否为空
+            if (!StringUtils.isNullOrEmpty(file.getFileId())) {
+                //id不为空则是替换 附件
+                FileList oldFile = fileListMapper.selectFileId(file.getFileId());
+
+                //将原来的创建时间赋值给替换后的附件
+                if(Objects.nonNull(oldFile)){
+                    file.setCreateTime(oldFile.getCreateTime());
+                    file.setFileId(oldFile.getFileId());
+                }
+                //修改时间为当前时间
+                file.setUpdateTime(date);
+                //根据id删除附件
+                fileListMapper.deleteByPrimaryKey(oldFile.getFileId());
+            } else {
+                file.setCreateTime(date);
+                //定义附件主键id
+                String uuid = UUID.randomUUID().toString().replace("-", "");
+                file.setFileId(uuid);
+            }
+        }
+        return fileListMapper.insertFiles(list);
     }
 
 

@@ -3,6 +3,7 @@ package com.ytxd.dao;
 import com.ytxd.pojo.FileList;
 
 import javax.servlet.http.HttpSession;
+import java.nio.file.Files;
 import java.util.List;
 
 public interface FileListMapper {
@@ -22,13 +23,15 @@ public interface FileListMapper {
      */
     int insert(FileList fileList);
 
+    int insertFiles(List<FileList> files);
+
     /**
      * 根据目录查找
      *
      * @param categoryId
      * @return
      */
-    List<FileList> selectCategotyId(Integer categoryId);
+    List<FileList> selectCategotyId(int categoryId);
 
     /**
      * 根據id查詢

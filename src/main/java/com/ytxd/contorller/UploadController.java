@@ -40,6 +40,7 @@ public class UploadController {
         //配置类
         UploadDto uploadDto = new UploadDto();
         if (file == null) {
+            System.out.println("=============="+file);
             throw new RuntimeException("未选择上传文件异常！");
         }
         try {

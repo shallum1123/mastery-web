@@ -3,7 +3,6 @@ package com.ytxd.service;
 import com.ytxd.common.Response;
 import com.ytxd.pojo.FileList;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface FileListService {
@@ -15,7 +14,7 @@ public interface FileListService {
      * @param categoryId
      * @return
      */
-    Response selectCategotyId(Integer categoryId, Integer page, Integer rows);
+    Response selectCategotyId(int categoryId, Integer page, Integer rows);
 
     /**
      * 添加
@@ -25,6 +24,10 @@ public interface FileListService {
      */
     int insert(FileList fileList);
 
+    /**
+     * 添加多个附件接口
+     */
+    int insertFiles(List<FileList> list);
     /**
      * 根据id删除
      *

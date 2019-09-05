@@ -1,7 +1,6 @@
 package com.ytxd.contorller;
 
 
-import com.ytxd.common.Response;
 import com.ytxd.common.Result;
 import com.ytxd.pojo.FileList;
 import com.ytxd.service.FileListService;
@@ -44,11 +43,27 @@ public class FileListController {
      * @param fileList
      * @return
      */
-    @PostMapping("/add")
-    @ApiOperation(value="添加一条附件信息",notes = "添加附件对象")
-    public ResponseEntity add(@RequestBody @ApiParam(name = "附件对象",value = "传入json格式") FileList fileList){
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
+   // @ApiOperation(value="添加一条附件信息",notes = "添加附件对象")
+    public ResponseEntity add(@RequestBody FileList fileList){
         try {
             fileListService.insert(fileList);
+            return new ResponseEntity(new Result(true, "增加附件成功"), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity(new Result(false, "增加附件失败"), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    /**
+     * 添加 多个附件
+     * @param list
+     * @return
+     */
+    @RequestMapping(value = "/addFiles",method = RequestMethod.POST)
+    // @ApiOperation(value="添加多条附件信息",notes = "添加附件对象")
+    public ResponseEntity add(@RequestBody List<FileList> list){
+        try {
+            fileListService.insertFiles(list);
             return new ResponseEntity(new Result(true, "增加附件成功"), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();

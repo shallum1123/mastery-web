@@ -18,8 +18,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        file_id
-        ,
+        file_id,
         category_id ,
         business_id,
         file_title,
@@ -141,6 +140,26 @@
                 #{spare3,jdbcType=VARCHAR},
             </if>
         </trim>
+    </insert>
+
+    <!--添加多个file-->
+    <insert id="insertFiles" parameterType="java.util.List">
+        INSERT  INTO  filelist(file_id,category_id,business_id,file_title,real_name,upload_name,create_time,update_time,
+        file_sort,url) values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (
+            #{item.fileId,jdbcType=VARCHAR},
+            #{item.categoryId,jdbcType=INTEGER},
+            #{item.businessId,jdbcType=VARCHAR},
+            #{item.fileTitle,jdbcType=VARCHAR},
+            #{item.realName,jdbcType=VARCHAR},
+            #{item.uploadName,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP},
+            #{item.updateTime,jdbcType=TIMESTAMP},
+            #{item.fileSort,jdbcType=INTEGER},
+            #{item.url,jdbcType=VARCHAR}
+            )
+        </foreach>
     </insert>
 
 </mapper>

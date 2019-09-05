@@ -2,11 +2,13 @@ package com.ytxd.dto;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 上传返回的结果集
  */
 @Data
-public class UploadResult {
+public class UploadResult implements Serializable {
     /**
      * 文件上传后的名称
      */

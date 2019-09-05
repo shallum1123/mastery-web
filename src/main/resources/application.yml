@@ -1,6 +1,10 @@
 #注册中心
 server:
   port: 6002
+  #增加服务配置，自定义baseDir
+  tomcat:
+    basedir: /tmp/tomcat
+
 eureka:
   client:
     service-url:
@@ -11,13 +15,13 @@ eureka:
     lease-renewal-interval-in-seconds: 10
     #告诉服务端，如果我20s之内没有给你发心跳，就代表我“死”了，将我踢出掉。
     lease-expiration-duration-in-seconds: 20
-    metadata-map:
-      user.name: ${security.user.name}
-      user.password: ${security.user.password}
-security:
-  user:
-    name: user
-    password: hanhuibing
+#    metadata-map:
+#      user.name: ${security.user.name}
+#      user.password: ${security.user.password}
+#security:
+#  user:
+#    name: user
+#    password: hanhuibing
 spring:
   #数据库配置
   datasource:
@@ -28,9 +32,12 @@ spring:
     password: 1qaz2wsx!@
   #上传文件大小设置
   http:
+
     multipart:
       max-file-size: 1000MB
       max-request-size: 1000MB
+      #创建临时文件目录
+      #location: /data/upload_tmp
   #热部署
   devtools:
     restart:  enabled:false
@@ -46,8 +53,11 @@ mybatis:
   mapper-locations: classpath:com/ytxd/mapper/*Mapper.xml
 upload:
   file-path: /workspace/uploadFile
-  #url: http://192.168.43.162:6002
-  url: http://192.144.192.2:6002
+  url: http://localhost:6002
+  #url: http://192.144.192.2:6002
 management:
   security:
     enabled: true
+security:
+  basic:
+    enabled: false
