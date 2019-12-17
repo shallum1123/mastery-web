@@ -29,4 +29,9 @@ public class UploadResult implements Serializable {
      * 上传的绝对路径
      */
     private String uploadUrl;
+
+    /**
+     * 上传文件的全路径
+     */
+    private String allUrl;
 }

@@ -31,4 +31,5 @@ public class Article implements Serializable {
      */
     private List<FileList> files;
 
+
 }

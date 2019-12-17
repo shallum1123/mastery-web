@@ -9,11 +9,14 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.MultipartConfigFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -38,9 +41,8 @@ public class UploadController {
         //结果集类
         UploadResult uploadResult = new UploadResult();
         //配置类
-        UploadDto uploadDto = new UploadDto();
+        //UploadDto uploadDto = new UploadDto();
         if (file == null) {
-            System.out.println("=============="+file);
             throw new RuntimeException("未选择上传文件异常！");
         }
         try {
@@ -69,6 +71,7 @@ public class UploadController {
             uploadResult.setUploadUrl(url+folderName);
             uploadResult.setStatus(200);
             uploadResult.setUploadMessage("上传成功！");
+            uploadResult.setAllUrl(uploadUrl);
             log.info("{}", "文件上传成功！", 200);
         } catch (IOException e) {
             log.error("{}", "文件上传失败，失败理由：", e);
