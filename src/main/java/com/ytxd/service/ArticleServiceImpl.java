@@ -21,7 +21,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public Response queryByCondition(Article article, Integer rows, Integer page) {
-
         Response response = new Response();
         // articleId and categoryId 不能同时为空
         List<Article> articles = articleMapper.selectByCondition(article);
@@ -29,15 +28,15 @@ public class ArticleServiceImpl implements ArticleService {
             throw new RuntimeException("获取文章列表异常");
         }
         //如果文章id不为空，则是查询文章详情
-        if (article.getArticleId() != null) {
-            //查询当前文章对应的附件
-            List<FileList> articleFiles = articleMapper.selectByBusinessId(article.getArticleId());
-            if (!articleFiles.isEmpty() && !Objects.isNull(articleFiles)) {
-                for (Article ar : articles) {
-                    //将查询到的附件赋值给文章的附件属性
-                    ar.setFiles(articleFiles);
+        if (!Objects.isNull(articles) && !articles.isEmpty()) {
+            for (Article article2 : articles) {
+                //查询当前文章对应的附件
+                List<FileList> articleFiles = articleMapper.selectByBusinessId(article2.getArticleId());
+                if (!articleFiles.isEmpty() && !Objects.isNull(articleFiles)) {
+                    article2.setFiles(articleFiles);
                 }
             }
+
         }
         response.setResultList(articles);
         //分页
