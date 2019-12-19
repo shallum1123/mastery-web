@@ -2,8 +2,8 @@
 server:
   port: 6002
   #增加服务配置，自定义baseDir
-#  tomcat:
-#    basedir: /data/apps/temp
+  tomcat:
+    basedir: /tmp/tomcat
 
 eureka:
   client:
@@ -30,12 +30,14 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 1qaz2wsx!@
-    #上传文件大小设置
+  #上传文件大小设置
   http:
-      multipart:
-          max-file-size: 1000MB
-          max-request-size: 1000MB
-#      location: /data/apps/temp
+
+    multipart:
+      max-file-size: 1000MB
+      max-request-size: 1000MB
+      #创建临时文件目录
+      #location: /data/upload_tmp
   #热部署
   devtools:
     restart:  enabled:false
@@ -49,14 +51,21 @@ spring:
 mybatis:
   type-aliases-package: com.ytxd.pojo
   mapper-locations: classpath:com/ytxd/mapper/*Mapper.xml
-upload:
-  file-path: /workspace/uploadFile
-  #url: http://localhost:6002
+  #upload:
+  #  file-path: /workspace/uploadFile
+  #  url: http://localhost:6002
   #url: http://192.144.192.2:6002
-  url: http://129.28.187.140:6002
 management:
   security:
     enabled: true
 security:
   basic:
     enabled: false
+# 文件上傳
+uploadFile:
+  ip: 192.144.192.2
+  user: root
+  password: '1qaz2wsx!@#$'
+  port: 22
+  filepath: /workspace/images
+  url: http://192.144.192.2:8888
