@@ -42,7 +42,7 @@ public class ArticleController {
     @ApiOperation(value = "动态查询文章分页", notes = "文章id，和类别id不能同时为空")
     public ResponseEntity queryArticle(@ApiParam(name = "article", value = "若文章id不为空，则根据文章id查询，类别id不为空则根据文章id查询，否则查询所有") Article article,
                                        @ApiParam(name = "rows", value = "每页总行数") Integer rows,
-                                       @ApiParam(name = "page", value = "当前页数") Integer page) {
+                                       @ApiParam(name = "  ", value = "当前页数") Integer page) {
         return new ResponseEntity(articleService.queryByCondition(article, rows, page), HttpStatus.OK);
     }
 

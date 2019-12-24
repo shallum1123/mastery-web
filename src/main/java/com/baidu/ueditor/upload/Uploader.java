@@ -13,7 +13,7 @@ public class Uploader {
 		this.conf = conf;
 	}
 
-	public final State doExec() {
+	public State doExec() {
 		String filedName = (String) this.conf.get("fieldName");
 		State state = null;
 
@@ -21,7 +21,8 @@ public class Uploader {
 			state = Base64Uploader.save(this.request.getParameter(filedName),
 					this.conf);
 		} else {
-			state = BinaryUploader.save(this.request, this.conf);
+			BinaryUploader uploader = new BinaryUploader();
+			state = uploader.save(this.request, this.conf);
 		}
 
 		return state;

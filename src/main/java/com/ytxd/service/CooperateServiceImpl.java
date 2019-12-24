@@ -63,10 +63,10 @@ public class CooperateServiceImpl implements CooperateService {
         if (record.getName().isEmpty()) {
             throw new RuntimeException("姓名不能为空");
         }
-        if (record.getTel().isEmpty() || record.getTel().length() != 11 || record.getTel().matches("/((\\d{11})|^((\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})|(\\d{4}|\\d{3})-(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1})|(\\d{7,8})-(\\d{4}|\\d{3}|\\d{2}|\\d{1}))$)/")) {
+        if (record.getTel().isEmpty() || record.getTel().length() != 11 || record.getTel().matches("^\\d+$")) {
             throw new RuntimeException("电话格式不正确");
         }
-        if (record.getEmail().matches("/^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$/")) {
+        if (record.getEmail().matches("^([a-zA-Z0-9])+([a-zA-Z0-9_.-])+@([a-zA-Z0-9_-])+((\\.[a-zA-Z0-9_-]{2,3}){1,2})$")) {
             throw new RuntimeException("邮箱格式不正确");
         }
         return cooperateMapper.insert(record);
