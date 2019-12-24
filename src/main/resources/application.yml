@@ -31,8 +31,7 @@ spring:
     username: root
     password: 1qaz2wsx!@
   #上传文件大小设置
-  http:
-
+  http: 
     multipart:
       max-file-size: 1000MB
       max-request-size: 1000MB
@@ -61,6 +60,9 @@ management:
 security:
   basic:
     enabled: false
+logging: 
+  level:
+    root: ERROR
 # 文件上傳
 uploadFile:
   ip: 192.144.192.2
