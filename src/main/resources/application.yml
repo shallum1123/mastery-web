@@ -5,16 +5,18 @@ server:
   tomcat:
     basedir: /tmp/tomcat
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://user:hanhuibing@com.dolphin.eureka1:9001/eureka,http://user:hanhuibing@com.dolphin.eureka2:9002/eureka
-  instance:
-    hostname: mastery-web
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://user:hanhuibing@com.dolphin.eureka1:9001/eureka,http://user:hanhuibing@com.dolphin.eureka2:9002/eureka
+#  instance:
+#    hostname: mastery-web
     #每间隔10s，向服务端发送一次心跳，证明自己依然”存活“
-    lease-renewal-interval-in-seconds: 10
+#    lease-renewal-interval-in-seconds: 10
     #告诉服务端，如果我20s之内没有给你发心跳，就代表我“死”了，将我踢出掉。
-    lease-expiration-duration-in-seconds: 20
+#    lease-expiration-duration-in-seconds: 20
+
+
 #    metadata-map:
 #      user.name: ${security.user.name}
 #      user.password: ${security.user.password}
@@ -26,10 +28,10 @@ spring:
   #数据库配置
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://192.144.192.2:3306/masteydb?characterEncoding=utf8
+    url: jdbc:mysql://49.233.195.230:3306/masterydb?characterEncoding=utf8
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: 1qaz2wsx!@
+    password: '1qaz2wsx!@#$%^'
   #上传文件大小设置
   http: 
     multipart:
@@ -65,9 +67,9 @@ logging:
     root: ERROR
 # 文件上傳
 uploadFile:
-  ip: 192.144.192.2
+  ip: 49.233.195.230
   user: root
-  password: '1qaz2wsx!@#$'
+  password: '1qaz2wsx!@#$%^'
   port: 22
   filepath: /workspace/images
-  url: http://192.144.192.2:8888
+  url: http://49.233.195.230

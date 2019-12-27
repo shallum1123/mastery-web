@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 import javax.servlet.MultipartConfigElement;
 
-@EnableEurekaClient
+// @EnableEurekaClient
 @MapperScan("com.ytxd.dao")
 @SpringBootApplication
 public class MasteryWebApplication {

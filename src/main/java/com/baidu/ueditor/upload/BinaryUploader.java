@@ -43,7 +43,7 @@ public class BinaryUploader {
 
 //	   @Value("${uploadFile.ip}")
 //	   private String ip;
-	    private static String ip = "192.144.192.2";
+	    private static String ip = "49.233.195.230";
 
 //	    @Value("${uploadFile.port}")
 //	    private int port;
@@ -55,7 +55,7 @@ public class BinaryUploader {
 
 //	    @Value("${uploadFile.password}")
 //	    private String password;
-	   private static String password = "1qaz2wsx!@#$";
+	   private static String password = "1qaz2wsx!@#$%^";
 
 	   // @Value("${uploadFile.filepath}")
 	   // private static String filePath = "/workspace/images";
