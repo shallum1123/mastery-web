@@ -69,6 +69,7 @@
                 category_id = #{categoryId,jdbcType=INTEGER}
             </if>
         </where>
+        ORDER BY CREATE_TIME DESC
     </select>
 
     <!-- 根据文章主键查询对应的所有附件-->
